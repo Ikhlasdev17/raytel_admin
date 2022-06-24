@@ -1,12 +1,24 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Sidebar from "../Sidebar/Sidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 const Dashboard = () => {
     // states
     const [collapsed, setCollapsed] = useState(false)
-
+    const navigate = useNavigate()
+    useEffect(() => {
+        axios.get(`https://raytel.uz/api/products`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+        .then(res => {
+            console.log('')
+        })
+        .catch(() => navigate("/login", { replace: true }))
+    }, [])
 
     return (
         <div className="flex h-screen overflow-hidden">
